@@ -5,18 +5,16 @@ interface GetProductsOptions {
   filterKey?: string;
 }
 
-const sleep = (seconds: number) => {
+export const sleep = (seconds: number) => {
   return new Promise((resolve) => setTimeout(resolve, seconds));
 };
 export const getProducts = async ({ filterKey }: GetProductsOptions) => {
-  await sleep(2000);
   const filterUrl = filterKey ? `category=${filterKey}` : "";
   const { data } = await productsApi.get<Product[]>(`/products?${filterUrl}`);
   return data;
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
-  // await sleep(2000);
   const { data } = await productsApi.get<Product>(`/products/${id}`);
   return data;
 };
@@ -31,8 +29,8 @@ export interface ProductLike {
 }
 
 export const createProduct = async (product: ProductLike) => {
-  await sleep(2000);
-
+  await sleep(5000);
+  throw new Error("Failed to create product");
   const { data } = await productsApi.post<ProductLike>(`/products`, product);
   return data;
 };
